@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "617210248665",
+    "project_id": "bitra-fc460",
+    "storage_bucket": "bitra-fc460.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:617210248665:android:84fca5a148126ca7daadc8",
+        "android_client_info": {
+          "package_name": "com.example.project_bitra"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "617210248665-slpgbchqsgmn8m91ru5cmjk41pkmv5ra.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwf__Fb965RxzDpTmjQczTHwH_yufMamk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "617210248665-slpgbchqsgmn8m91ru5cmjk41pkmv5ra.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
