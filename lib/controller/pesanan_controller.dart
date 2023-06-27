@@ -36,8 +36,4 @@ class PesananController {
     return pesanan.docs;
   }
 
-  Future deleteContact(String id) async {
-    final contact = await pesananCollection.doc(id).delete();
-    return contact;
-  }
 }
