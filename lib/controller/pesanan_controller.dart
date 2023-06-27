@@ -36,4 +36,8 @@ class PesananController {
     return pesanan.docs;
   }
 
+  Future hapusPesanan(String id) async {
+    final pesanan = await pesananCollection.doc(id).delete();
+    return pesanan;
+  }
 }
