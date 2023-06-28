@@ -94,22 +94,22 @@ class _AdminDashboardState extends State<AdminDashboard> {
                               ),
                               title: Text(data[index]['nama']),
                               subtitle: Text(data[index]['noHp']),
-                              // trailing: IconButton(
-                              //   icon: Icon(Icons.delete),
-                              //   onPressed: () {
-                              //     cc
-                              //         .hapusPesanan(
-                              //             data[index]['id'].toString())
-                              //         .then((value) {
-                              //       setState(() {
-                              //         cc.getPesanan();
-                              //       });
-                              //     });
-                              //     ScaffoldMessenger.of(context).showSnackBar(
-                              //         const SnackBar(
-                              //             content: Text('Contact Deleted')));
-                              //   },
-                              // ),
+                              trailing: IconButton(
+                                icon: Icon(Icons.delete),
+                                onPressed: () {
+                                  cc
+                                      .hapusPesanan(
+                                          data[index]['id'].toString())
+                                      .then((value) {
+                                    setState(() {
+                                      cc.getPesanan();
+                                    });
+                                  });
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text('Contact Deleted')));
+                                },
+                              ),
                             ),
                           ),
                         ),
