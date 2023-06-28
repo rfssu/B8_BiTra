@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../../controller/aut_controller.dart';
 import '../../controller/pesanan_controller.dart';
+import '../loginScreen.dart';
 import 'konfirmasi.dart';
 
 import 'package:flutter/material.dart';
@@ -35,6 +37,16 @@ class _AdminDashboardState extends State<AdminDashboard> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Admin Dashboard'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              },
+              icon: Icon(Icons.logout_rounded))
+        ],
       ),
       body: SafeArea(
         child: Column(
@@ -62,22 +74,6 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: InkWell(
-                          // onLongPress: () {
-                          //   Navigator.push(
-                          //       context,
-                          //       MaterialPageRoute(
-                          //           builder: (context) => UpdateContact(
-                          //                 beforenama:
-                          //                     data[index]['name'].toString(),
-                          //                 beforephone:
-                          //                     data[index]['phone'].toString(),
-                          //                 beforeemail:
-                          //                     data[index]['email'].toString(),
-                          //                 beforeaddress:
-                          //                     data[index]['address'].toString(),
-                          //                 id: data[index]['id'].toString(),
-                          //               )));
-                          // },
                           child: Card(
                             elevation: 10,
                             child: ListTile(
