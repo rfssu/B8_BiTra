@@ -22,16 +22,21 @@ class AdminDashboard extends StatefulWidget {
 }
 
 class _AdminDashboardState extends State<AdminDashboard> {
-
   var cc = PesananController();
   final authctrl = AuthController();
+  List<bool> _validationStatus = []; // Status validasi
 
-  
   @override
   void initState() {
     super.initState();
-    cc.getPesanan();
+    cc.getPesanan().then((data) {
+      setState(() {
+        // Inisialisasi status validasi dengan false
+        _validationStatus = List.generate(data.length, (index) => false);
+      });
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,13 +44,14 @@ class _AdminDashboardState extends State<AdminDashboard> {
         title: Text('Admin Dashboard'),
         actions: [
           IconButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => LoginPage()),
-                );
-              },
-              icon: Icon(Icons.logout_rounded))
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
+            },
+            icon: Icon(Icons.logout_rounded),
+          )
         ],
       ),
       body: SafeArea(
@@ -84,27 +90,44 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                       .substring(0, 1)
                                       .toUpperCase(),
                                   style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                               title: Text(data[index]['nama']),
                               subtitle: Text(data[index]['noHp']),
-                              trailing: IconButton(
-                                icon: Icon(Icons.delete),
-                                onPressed: () {
-                                  cc
-                                      .hapusPesanan(
-                                          data[index]['id'].toString())
-                                      .then((value) {
-                                    setState(() {
-                                      cc.getPesanan();
-                                    });
-                                  });
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text('Contact Deleted')));
-                                },
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                    icon: Icon(Icons.delete),
+                                    onPressed: () {
+                                      cc
+                                          .hapusPesanan(
+                                              data[index]['id'].toString())
+                                          .then((value) {
+                                        setState(() {
+                                          cc.getPesanan();
+                                        });
+                                      });
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(
+                                              content: Text('Contact Deleted')));
+                                    },
+                                  ),
+                                  IconButton(
+                                    icon: _validationStatus[index]
+                                        ? Icon(Icons.check)
+                                        : Icon(Icons.clear),
+                                    onPressed: () {
+                                      setState(() {
+                                        _validationStatus[index] =
+                                            !_validationStatus[index];
+                                      });
+                                    },
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -115,13 +138,12 @@ class _AdminDashboardState extends State<AdminDashboard> {
                 },
               ),
             ),
-            
           ],
         ),
-      )
+      ),
     );
   }
-  }
+}
 
 
 
