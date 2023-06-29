@@ -47,18 +47,11 @@ class PesananController {
       'status': 'diterima',
     });
   }
+  Future pesananSelesai(String id) async {
+    await pesananCollection.doc(id).update({
+      'status': 'selesai',
+    });
+  }
 
-  // Future accPesan(PesananModel pesananModel) async {
-  //   final PesananModel pesanan = PesananModel(
-  //       nama: pesananModel.nama,
-  //       alamat: pesananModel.alamat,
-  //       noHp: pesananModel.noHp,
-  //       namaBarang: pesananModel.namaBarang,
-  //       jumlahBarang: pesananModel.jumlahBarang,
-  //       tanggal: pesananModel.tanggal,
-  //       status: pesananModel.status);
-  //       await pesananCollection.doc(pesananModel.id).update({
-  //         'status': 'diterima'
-  //       });
-  // }
+
 }
