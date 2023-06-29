@@ -20,19 +20,20 @@ class PesananController {
 
     final PesananModel pesananModel = PesananModel(
         id: docId,
-        nama:modelPesanan.nama,
-        alamat:modelPesanan.alamat,
-        noHp:modelPesanan.noHp,
-        namaBarang:modelPesanan.namaBarang,
-        jumlahBarang:modelPesanan.jumlahBarang,
-        tanggal:modelPesanan.tanggal);
+        nama: modelPesanan.nama,
+        alamat: modelPesanan.alamat,
+        noHp: modelPesanan.noHp,
+        namaBarang: modelPesanan.namaBarang,
+        jumlahBarang: modelPesanan.jumlahBarang,
+        tanggal: modelPesanan.tanggal,
+        status: modelPesanan.status);
 
     await docRef.update(pesananModel.toMap());
   }
-   Future getPesanan() async {
+
+  Future getPesanan() async {
     final pesanan = await pesananCollection.get();
     streamController.sink.add(pesanan.docs);
-
     return pesanan.docs;
   }
 
@@ -40,4 +41,24 @@ class PesananController {
     final pesanan = await pesananCollection.doc(id).delete();
     return pesanan;
   }
+
+  Future acceptPesanan(String id) async {
+    await pesananCollection.doc(id).update({
+      'status': 'diterima',
+    });
+  }
+
+  // Future accPesan(PesananModel pesananModel) async {
+  //   final PesananModel pesanan = PesananModel(
+  //       nama: pesananModel.nama,
+  //       alamat: pesananModel.alamat,
+  //       noHp: pesananModel.noHp,
+  //       namaBarang: pesananModel.namaBarang,
+  //       jumlahBarang: pesananModel.jumlahBarang,
+  //       tanggal: pesananModel.tanggal,
+  //       status: pesananModel.status);
+  //       await pesananCollection.doc(pesananModel.id).update({
+  //         'status': 'diterima'
+  //       });
+  // }
 }
