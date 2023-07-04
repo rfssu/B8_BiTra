@@ -14,3 +14,6 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+![Usecase BiTra](https://github.com/Egyputrap7/090_BiTra/assets/96332093/2bbcaa77-1cc2-4adf-817f-64570489c921)
+
