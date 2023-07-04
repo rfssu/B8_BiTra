@@ -47,11 +47,36 @@ class PesananController {
       'status': 'diterima',
     });
   }
+
   Future pesananSelesai(String id) async {
     await pesananCollection.doc(id).update({
       'status': 'selesai',
     });
   }
 
+  Future getPesananById(String id) async {
+    try {
+      DocumentSnapshot snapshot = await pesananCollection.doc(id).get();
+      return snapshot;
+    } catch (e) {
+      print('Error getting pesanan by ID: $e');
+      throw e;
+    }
+  }
 
+  Future updatePesanan(PesananModel pesananModel) async {
+    final PesananModel pesanModel = PesananModel(
+      id: pesananModel.id,
+      nama: pesananModel.nama,
+      alamat: pesananModel.alamat,
+      noHp: pesananModel.noHp,
+      namaBarang: pesananModel.namaBarang,
+      jumlahBarang: pesananModel.jumlahBarang,
+      tanggal: pesananModel.tanggal,
+      status: pesananModel.status, // Tetapkan status yang ada sebelumnya
+    );
+    await pesananCollection.doc(pesananModel.id).update(pesananModel.toMap());
+    await getPesanan();
+  }
+  
 }
