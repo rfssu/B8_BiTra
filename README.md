@@ -16,4 +16,6 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 ![Usecase BiTra](https://github.com/Egyputrap7/090_BiTra/assets/96332093/2bbcaa77-1cc2-4adf-817f-64570489c921)
+![Flowchart Admin](https://github.com/Egyputrap7/090_BiTra/assets/96332093/e04921c4-50b8-4866-b803-421c449e5f3f)
+
 
