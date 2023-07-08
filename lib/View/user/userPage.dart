@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -53,6 +55,7 @@ class _UserHomeState extends State<UserHome> {
   }
 }
 
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -91,6 +94,7 @@ class _HomePageState extends State<HomePage> {
                     child: Text('Keluar'),
                     onPressed: () {
                       Navigator.of(context).pop(true);
+                      exit(0);
                     },
                   ),
                 ],
@@ -142,7 +146,7 @@ class _HomePageState extends State<HomePage> {
                           if (status != 'pending') {
                             return Container(); // Return an empty container if status is not 'pending'
                           }
-                          
+
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: InkWell(
@@ -333,7 +337,6 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           );
-
                         },
                       );
                     },
