@@ -26,7 +26,8 @@ class PesananController {
         namaBarang: modelPesanan.namaBarang,
         jumlahBarang: modelPesanan.jumlahBarang,
         tanggal: modelPesanan.tanggal,
-        status: modelPesanan.status);
+        status: modelPesanan.status,
+        uId: modelPesanan.uId);
 
     await docRef.update(pesananModel.toMap());
   }
@@ -73,7 +74,8 @@ class PesananController {
       namaBarang: pesananModel.namaBarang,
       jumlahBarang: pesananModel.jumlahBarang,
       tanggal: pesananModel.tanggal,
-      status: pesananModel.status, // Tetapkan status yang ada sebelumnya
+      status: pesananModel.status,
+      uId: pesananModel.uId // Tetapkan status yang ada sebelumnya
     );
     await pesananCollection.doc(pesananModel.id).update(pesananModel.toMap());
     await getPesanan();
