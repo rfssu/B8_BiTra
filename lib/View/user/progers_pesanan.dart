@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +47,7 @@ class _ProgresPesananState extends State<ProgresPesanan> {
               child: Text('Keluar'),
               onPressed: () {
                 Navigator.of(context).pop(true);
+                exit(0);
               },
             ),
           ],
