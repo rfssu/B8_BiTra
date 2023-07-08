@@ -108,17 +108,14 @@ class _AdminDashboardState extends State<AdminDashboard> {
                             elevation: 10,
                             child: ListTile(
                               leading: CircleAvatar(
-                                backgroundColor: Colors.blue,
-                                child: Text(
-                                  data[index]['nama']
-                                      .substring(0, 1)
-                                      .toUpperCase(),
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
+                                    backgroundColor: Colors.blue,
+                                    child: Icon(
+                                      _getIconByNamaBarang(
+                                          data[index]['namaBarang']),
+                                      color: Colors.white,
+                                      size: 24,
+                                    ),
                                   ),
-                                ),
-                              ),
                               title: Text(data[index]['nama']),
                               subtitle: Text(data[index]['tanggal']),
                               trailing: Row(
@@ -219,5 +216,21 @@ class _AdminDashboardState extends State<AdminDashboard> {
         ),
       ),
     );
+  }
+  IconData _getIconByNamaBarang(String namaBarang) {
+    switch (namaBarang.toLowerCase()) {
+      case 'meja':
+        return Icons.table_chart;
+      case 'kursi':
+        return Icons.chair;
+      case 'sofa':
+        return Icons.weekend;
+      case 'almari':
+        return Icons.storefront_sharp;
+      case 'kasur':
+        return Icons.bed;
+      default:
+        return Icons.device_unknown;
+    }
   }
 }
