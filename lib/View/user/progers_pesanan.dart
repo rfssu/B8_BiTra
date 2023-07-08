@@ -20,6 +20,9 @@ class ProgresPesanan extends StatefulWidget {
 class _ProgresPesananState extends State<ProgresPesanan> {
   var cc = PesananController();
 
+    final user = FirebaseAuth.instance.currentUser!;
+
+
   @override
   void initState() {
     super.initState();
@@ -94,7 +97,8 @@ class _ProgresPesananState extends State<ProgresPesanan> {
                         statusText = 'Selesai';
                       }
 
-                      if (status == 'selesai' || status == 'diterima') {
+                      if (data[index]['uId'] == user.uid) {
+                        if(status == 'selesai' || status == 'diterima' ){
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: InkWell(
@@ -127,6 +131,8 @@ class _ProgresPesananState extends State<ProgresPesanan> {
                             ),
                           ),
                         );
+                        }else
+                        return Container();
                       } else {
                         // Return an empty container if the status is neither "selesai" nor "diterima"
                         return Container();
@@ -142,7 +148,7 @@ class _ProgresPesananState extends State<ProgresPesanan> {
     )
     );
   }
-  IconData _getIconByNamaBarang(String namaBarang) {
+    IconData _getIconByNamaBarang(String namaBarang) {
     switch (namaBarang.toLowerCase()) {
       case 'meja':
         return Icons.table_chart;
@@ -150,8 +156,12 @@ class _ProgresPesananState extends State<ProgresPesanan> {
         return Icons.chair;
       case 'sofa':
         return Icons.weekend;
+      case 'almari':
+        return Icons.storefront_sharp;
+      case 'kasur':
+        return Icons.bed;
       default:
-        return Icons.museum;
+        return Icons.device_unknown;
     }
   }
 }
