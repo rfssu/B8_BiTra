@@ -11,6 +11,7 @@ class PesananModel {
     final int jumlahBarang;
     final String tanggal;
     String? status;
+    String? uId;
   PesananModel({
     this.id,
     required this.nama,
@@ -20,6 +21,7 @@ class PesananModel {
     required this.jumlahBarang,
     required this.tanggal,
     this.status,
+    this.uId,
   });
 
   Map<String, dynamic> toMap() {
@@ -32,6 +34,7 @@ class PesananModel {
       'jumlahBarang': jumlahBarang,
       'tanggal': tanggal,
       'status': status,
+      'uId': uId,
     };
   }
 
@@ -45,6 +48,7 @@ class PesananModel {
       jumlahBarang: map['jumlahBarang'] as int,
       tanggal: map['tanggal'] as String,
       status: map['status'] != null ? map['status'] as String : null,
+      uId: map['uId'] != null ? map['uId'] as String : null,
     );
   }
 
