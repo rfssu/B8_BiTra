@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_bitra/View/user/progers_pesanan.dart';
@@ -24,6 +25,8 @@ class _FormPemesananState extends State<FormPemesanan> {
   String? status = "pending";
   String? selectedOption;
   List<String> options = ['Meja', 'Kursi', 'Sofa', 'Kasur', 'Almari'];
+
+   final User? user = FirebaseAuth.instance.currentUser!;
 
   @override
   Widget build(BuildContext context) {
@@ -261,7 +264,9 @@ class _FormPemesananState extends State<FormPemesanan> {
                               namaBarang: namaBarang!,
                               jumlahBarang: jumlahBarang,
                               tanggal: tanggal!,
-                              status: status!);
+                              status: status!,
+                              uId: user!.uid
+                              );
                           pesananController.addpesanan(pm);
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Pesanan Added')),
