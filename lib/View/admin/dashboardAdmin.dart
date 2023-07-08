@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:project_bitra/View/user/progers_pesanan.dart';
+import 'package:project_bitra/model/model_pesanan.dart';
 
 import '../../controller/aut_controller.dart';
 import '../../controller/pesanan_controller.dart';
@@ -12,7 +16,6 @@ import 'konfirmasi.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/material.dart';
-
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -24,15 +27,19 @@ class AdminDashboard extends StatefulWidget {
 class _AdminDashboardState extends State<AdminDashboard> {
   var cc = PesananController();
   final authctrl = AuthController();
-  List<bool> _validationStatus = []; // Status validasi
+  final formkey = GlobalKey<FormState>();
+  String? status;
+
+  List<bool> _checkStatus = [];
+  List<DocumentSnapshot>? data; // Status centang
 
   @override
   void initState() {
     super.initState();
     cc.getPesanan().then((data) {
       setState(() {
-        // Inisialisasi status validasi dengan false
-        _validationStatus = List.generate(data.length, (index) => false);
+        _checkStatus = List<bool>.filled(data.length, false);
+        this.data = data; // Inisialisasi variabel data
       });
     });
   }
@@ -46,9 +53,11 @@ class _AdminDashboardState extends State<AdminDashboard> {
           IconButton(
             onPressed: () {
               FirebaseAuth.instance.signOut();
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => LoginPage()),
-              );
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  (route) => false,
+                );
             },
             icon: Icon(Icons.logout_rounded),
           )
@@ -56,6 +65,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
       ),
       body: SafeArea(
         child: Column(
+          key: formkey,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
@@ -77,6 +87,20 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   return ListView.builder(
                     itemCount: data.length,
                     itemBuilder: (context, index) {
+                      String status = data[index]['status'];
+
+                      IconData iconData = Icons.clear; // Ikona default
+
+                      if (status == 'diterima') {
+                        iconData = Icons
+                            .done; // Jika status diterima, ikon menjadi tanda centang
+                      } else if (status == 'pending') {
+                        iconData = Icons
+                            .clear; // Jika status pending, ikon tetap menjadi tanda silang
+                      } else if (status == 'selesai') {
+                        iconData = Icons.done_all;
+                      }
+
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: InkWell(
@@ -96,35 +120,88 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                 ),
                               ),
                               title: Text(data[index]['nama']),
-                              subtitle: Text(data[index]['noHp']),
+                              subtitle: Text(data[index]['tanggal']),
                               trailing: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   IconButton(
                                     icon: Icon(Icons.delete),
                                     onPressed: () {
-                                      cc
-                                          .hapusPesanan(
-                                              data[index]['id'].toString())
-                                          .then((value) {
-                                        setState(() {
-                                          cc.getPesanan();
-                                        });
-                                      });
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                          const SnackBar(
-                                              content: Text('Contact Deleted')));
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text('Konfirmasi'),
+                                            content: Text(
+                                                'Apakah Anda yakin ingin menghapus item ini?'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: Text('Batal'),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                              TextButton(
+                                                child: Text('Hapus'),
+                                                onPressed: () {
+                                                  // Lakukan tindakan hapus disini
+                                                  cc
+                                                      .hapusPesanan(data[index]
+                                                              ['id']
+                                                          .toString())
+                                                      .then((value) {
+                                                    setState(() {
+                                                      cc.getPesanan();
+                                                    });
+                                                  });
+                                                  Navigator.of(context)
+                                                      .pop(); // Tutup dialog setelah menghapus
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                      content: Text(
+                                                          'Pesanan dihapus'),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
                                     },
                                   ),
                                   IconButton(
-                                    icon: _validationStatus[index]
-                                        ? Icon(Icons.check)
-                                        : Icon(Icons.clear),
-                                    onPressed: () {
-                                      setState(() {
-                                        _validationStatus[index] =
-                                            !_validationStatus[index];
-                                      });
+                                    icon: Icon(
+                                        iconData), // Menggunakan ikon sesuai kondisi
+                                    onPressed: () async {
+                                      if (status == 'pending') {
+                                        await cc.acceptPesanan(
+                                            data[index]['id'].toString());
+                                        setState(() {
+                                          _checkStatus[index] = true;
+                                        });
+
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AdminDashboard()), // Ganti HalamanTujuan dengan halaman yang ingin Anda reload
+                                        );
+                                      } else if (status == 'diterima') {
+                                        await cc.pesananSelesai(
+                                            data[index]['id'].toString());
+                                        setState(() {
+                                          _checkStatus[index] = false;
+                                        });
+
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AdminDashboard()), // Ganti HalamanTujuan dengan halaman yang ingin Anda reload
+                                        );
+                                      }
                                     },
                                   ),
                                 ],
@@ -144,6 +221,3 @@ class _AdminDashboardState extends State<AdminDashboard> {
     );
   }
 }
-
-
-
