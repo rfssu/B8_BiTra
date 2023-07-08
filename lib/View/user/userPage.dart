@@ -4,8 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:project_bitra/View/loginScreen.dart';
 import 'package:project_bitra/View/user/pemesanan.dart';
 import 'package:project_bitra/View/user/progers_pesanan.dart';
@@ -55,7 +53,6 @@ class _UserHomeState extends State<UserHome> {
   }
 }
 
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -66,6 +63,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var cc = PesananController();
   final authctrl = AuthController();
+  final User user = FirebaseAuth.instance.currentUser!;
 
   @override
   void initState() {
@@ -143,200 +141,219 @@ class _HomePageState extends State<HomePage> {
                         itemCount: data.length,
                         itemBuilder: (context, index) {
                           String status = data[index]['status'];
+
                           if (status != 'pending') {
                             return Container(); // Return an empty container if status is not 'pending'
                           }
 
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: InkWell(
-                              onTap: () async {
-                                BuildContext sheetContext = context;
-                                DocumentSnapshot pesananSnapshot =
-                                    await cc.getPesananById(
-                                        data[index]['id'].toString());
+                          if (data[index]['uId'] == user.uid) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: InkWell(
+                                onTap: () async {
+                                  BuildContext sheetContext = context;
+                                  DocumentSnapshot pesananSnapshot =
+                                      await cc.getPesananById(
+                                          data[index]['id'].toString());
 
-                                showModalBottomSheet(
-                                  context: sheetContext,
-                                  builder: (BuildContext context) {
-                                    return Container(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            'Detail Pesanan',
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          const SizedBox(height: 16.0),
-                                          Text(
-                                            'Nama: ${pesananSnapshot['nama']}',
-                                            style:
-                                                const TextStyle(fontSize: 16),
-                                          ),
-                                          Text(
-                                            'Alamat: ${pesananSnapshot['alamat']}',
-                                            style:
-                                                const TextStyle(fontSize: 16),
-                                          ),
-                                          Text(
-                                            'No HP: ${pesananSnapshot['noHp']}',
-                                            style:
-                                                const TextStyle(fontSize: 16),
-                                          ),
-                                          Text(
-                                            'Nama Barang: ${pesananSnapshot['namaBarang']}',
-                                            style:
-                                                const TextStyle(fontSize: 16),
-                                          ),
-                                          Text(
-                                            'Jumlah Barang: ${pesananSnapshot['jumlahBarang']}',
-                                            style:
-                                                const TextStyle(fontSize: 16),
-                                          ),
-                                          Text(
-                                            'Tanggal Pengambilan: ${pesananSnapshot['tanggal']}',
-                                            style:
-                                                const TextStyle(fontSize: 16),
-                                          ),
-                                          Text(
-                                            'Status: ${pesananSnapshot['status']}',
-                                            style:
-                                                const TextStyle(fontSize: 16),
-                                          ),
-                                          const SizedBox(height: 16.0),
-                                          if (pesananSnapshot['status'] ==
-                                              'pending')
+                                  showModalBottomSheet(
+                                    context: sheetContext,
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const Text(
+                                              'Detail Pesanan',
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            const SizedBox(height: 16.0),
+                                            Text(
+                                              'Nama: ${pesananSnapshot['nama']}',
+                                              style:
+                                                  const TextStyle(fontSize: 16),
+                                            ),
+                                            Text(
+                                              'Alamat: ${pesananSnapshot['alamat']}',
+                                              style:
+                                                  const TextStyle(fontSize: 16),
+                                            ),
+                                            Text(
+                                              'No HP: ${pesananSnapshot['noHp']}',
+                                              style:
+                                                  const TextStyle(fontSize: 16),
+                                            ),
+                                            Text(
+                                              'Nama Barang: ${pesananSnapshot['namaBarang']}',
+                                              style:
+                                                  const TextStyle(fontSize: 16),
+                                            ),
+                                            Text(
+                                              'Jumlah Barang: ${pesananSnapshot['jumlahBarang']}',
+                                              style:
+                                                  const TextStyle(fontSize: 16),
+                                            ),
+                                            Text(
+                                              'Tanggal Pengambilan: ${pesananSnapshot['tanggal']}',
+                                              style:
+                                                  const TextStyle(fontSize: 16),
+                                            ),
+                                            Text(
+                                              'Status: ${pesananSnapshot['status']}',
+                                              style:
+                                                  const TextStyle(fontSize: 16),
+                                            ),
+                                            const SizedBox(height: 16.0),
+                                            if (pesananSnapshot['status'] ==
+                                                'pending')
+                                              Align(
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                UpdatePesanan(
+                                                                  beforenama: data[
+                                                                              index]
+                                                                          [
+                                                                          'nama']
+                                                                      .toString(),
+                                                                  beforealamat:
+                                                                      data[index]
+                                                                              [
+                                                                              'alamat']
+                                                                          .toString(),
+                                                                  beforenoHp: data[
+                                                                              index]
+                                                                          [
+                                                                          'noHp']
+                                                                      .toString(),
+                                                                  beforeanamaBarang:
+                                                                      data[index]
+                                                                              [
+                                                                              'namaBarang']
+                                                                          .toString(),
+                                                                  beforejumlahBarang:
+                                                                      int.parse(data[index]
+                                                                              [
+                                                                              'jumlahBarang']
+                                                                          .toString()), // Convert to int
+
+                                                                  beforetanggal:
+                                                                      data[index]
+                                                                              [
+                                                                              'tanggal']
+                                                                          .toString(),
+                                                                  status: data[
+                                                                              index]
+                                                                          [
+                                                                          'status']
+                                                                      .toString(),
+                                                                  id: data[index]
+                                                                          ['id']
+                                                                      .toString(),
+                                                                  uId: data[index]
+                                                                          [
+                                                                          'uId']
+                                                                      .toString(),
+                                                                )));
+                                                  },
+                                                  child: const Text('Edit'),
+                                                ),
+                                              ),
                                             Align(
                                               alignment: Alignment.centerRight,
-                                              child: ElevatedButton(
+                                              child: TextButton(
                                                 onPressed: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder:
-                                                              (context) =>
-                                                                  UpdatePesanan(
-                                                                    beforenama: data[index]
-                                                                            [
-                                                                            'nama']
-                                                                        .toString(),
-                                                                    beforealamat:
-                                                                        data[index]['alamat']
-                                                                            .toString(),
-                                                                    beforenoHp: data[index]
-                                                                            [
-                                                                            'noHp']
-                                                                        .toString(),
-                                                                    beforeanamaBarang:
-                                                                        data[index]['namaBarang']
-                                                                            .toString(),
-                                                                    beforejumlahBarang:
-                                                                        int.parse(
-                                                                            data[index]['jumlahBarang'].toString()), // Convert to int
-
-                                                                    beforetanggal:
-                                                                        data[index]['tanggal']
-                                                                            .toString(),
-                                                                    status: data[index]
-                                                                            [
-                                                                            'status']
-                                                                        .toString(),
-                                                                    id: data[index]
-                                                                            [
-                                                                            'id']
-                                                                        .toString(),
-                                                                  )));
+                                                  Navigator.of(sheetContext)
+                                                      .pop();
                                                 },
-                                                child: const Text('Edit'),
+                                                child: const Text('Tutup'),
                                               ),
                                             ),
-                                          Align(
-                                            alignment: Alignment.centerRight,
-                                            child: TextButton(
-                                              onPressed: () {
-                                                Navigator.of(sheetContext)
-                                                    .pop();
-                                              },
-                                              child: const Text('Tutup'),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                              child: Card(
-                                shadowColor: Colors.green,
-                                elevation: 10,
-                                child: ListTile(
-                                  leading: CircleAvatar(
-                                    backgroundColor: Colors.blue,
-                                    child: Icon(
-                                      _getIconByNamaBarang(
-                                          data[index]['namaBarang']),
-                                      color: Colors.white,
-                                      size: 24,
-                                    ),
-                                  ),
-                                  title: Text(data[index]['namaBarang']),
-                                  subtitle: Text(data[index]['tanggal']),
-                                  hoverColor: Colors.green,
-                                  trailing: IconButton(
-                                    icon: Icon(Icons.delete),
-                                    onPressed: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: Text('Konfirmasi'),
-                                            content: Text(
-                                                'Apakah Anda yakin ingin menghapus item ini?'),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                child: Text('Batal'),
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                              ),
-                                              TextButton(
-                                                child: Text('Hapus'),
-                                                onPressed: () {
-                                                  // Lakukan tindakan hapus disini
-                                                  cc
-                                                      .hapusPesanan(data[index]
-                                                              ['id']
-                                                          .toString())
-                                                      .then((value) {
-                                                    setState(() {
-                                                      cc.getPesanan();
-                                                    });
-                                                  });
-                                                  Navigator.of(context)
-                                                      .pop(); // Tutup dialog setelah menghapus
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                    SnackBar(
-                                                      content: Text(
-                                                          'Pesanan dihapus'),
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                            ],
-                                          );
-                                        },
+                                          ],
+                                        ),
                                       );
                                     },
+                                  );
+                                },
+                                child: Card(
+                                  shadowColor: Colors.green,
+                                  elevation: 10,
+                                  child: ListTile(
+                                    leading: CircleAvatar(
+                                      backgroundColor: Colors.blue,
+                                      child: Icon(
+                                        _getIconByNamaBarang(
+                                            data[index]['namaBarang']),
+                                        color: Colors.white,
+                                        size: 24,
+                                      ),
+                                    ),
+                                    title: Text(data[index]['namaBarang']),
+                                    subtitle: Text(data[index]['tanggal']),
+                                    hoverColor: Colors.green,
+                                    trailing: IconButton(
+                                      icon: Icon(Icons.delete),
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text('Konfirmasi'),
+                                              content: Text(
+                                                  'Apakah Anda yakin ingin menghapus item ini?'),
+                                              actions: <Widget>[
+                                                TextButton(
+                                                  child: Text('Batal'),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                                TextButton(
+                                                  child: Text('Hapus'),
+                                                  onPressed: () {
+                                                    // Lakukan tindakan hapus disini
+                                                    cc
+                                                        .hapusPesanan(
+                                                            data[index]['id']
+                                                                .toString())
+                                                        .then((value) {
+                                                      setState(() {
+                                                        cc.getPesanan();
+                                                      });
+                                                    });
+                                                    Navigator.of(context)
+                                                        .pop(); // Tutup dialog setelah menghapus
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                            'Pesanan dihapus'),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          );
+                            );
+                          } else
+                            return Container();
                         },
                       );
                     },
@@ -388,8 +405,12 @@ class _HomePageState extends State<HomePage> {
         return Icons.chair;
       case 'sofa':
         return Icons.weekend;
+      case 'almari':
+        return Icons.storefront_sharp;
+      case 'kasur':
+        return Icons.bed;
       default:
-        return Icons.museum;
+        return Icons.device_unknown;
     }
   }
 }
