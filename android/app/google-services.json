@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "617210248665",
-    "project_id": "bitra-fc460",
-    "storage_bucket": "bitra-fc460.appspot.com"
+    "project_number": "130992672950",
+    "project_id": "ucpbitra",
+    "storage_bucket": "ucpbitra.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:617210248665:android:84fca5a148126ca7daadc8",
+        "mobilesdk_app_id": "1:130992672950:android:461dffa63d29c8cbc85617",
         "android_client_info": {
           "package_name": "com.example.project_bitra"
         }
       },
       "oauth_client": [
         {
-          "client_id": "617210248665-slpgbchqsgmn8m91ru5cmjk41pkmv5ra.apps.googleusercontent.com",
+          "client_id": "130992672950-4o9s87bo8kukunijm3hieq5bob1fqttf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBwf__Fb965RxzDpTmjQczTHwH_yufMamk"
+          "current_key": "AIzaSyAhbDPuXDjAj_yQfpXnFeB_vOHb407nmd8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "617210248665-slpgbchqsgmn8m91ru5cmjk41pkmv5ra.apps.googleusercontent.com",
+              "client_id": "130992672950-4o9s87bo8kukunijm3hieq5bob1fqttf.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
