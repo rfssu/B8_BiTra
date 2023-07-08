@@ -17,7 +17,8 @@ class UpdatePesanan extends StatefulWidget {
       this.beforeanamaBarang,
       this.beforejumlahBarang,
       this.beforetanggal,
-      this.status});
+      this.status,
+      this.uId});
 
   final String? id;
   final String? beforenama;
@@ -27,6 +28,7 @@ class UpdatePesanan extends StatefulWidget {
   final int? beforejumlahBarang;
   final String? beforetanggal;
   final String? status;
+  final String? uId;
 
   @override
   State<UpdatePesanan> createState() => _UpdatePesananState();
@@ -44,6 +46,7 @@ class _UpdatePesananState extends State<UpdatePesanan> {
   int? jumlahBarang;
   String? tanggal;
   String? status;
+  String? uId;
 
   String? selectedOption;
   List<String> options = ['Meja', 'Kursi', 'Sofa', 'Kasur', 'Almari'];
@@ -199,6 +202,7 @@ class _UpdatePesananState extends State<UpdatePesanan> {
                             jumlahBarang: jumlahBarang!,
                             tanggal: tanggal!,
                             status: widget.status,
+                            uId: widget.uId
                           );
 
                           pesananController.updatePesanan(pm);
@@ -208,7 +212,7 @@ class _UpdatePesananState extends State<UpdatePesanan> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const HomePage(),
+                              builder: (context) => const UserHome(),
                             ),
                           );
                         }
