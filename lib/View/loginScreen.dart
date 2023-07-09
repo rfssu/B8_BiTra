@@ -118,7 +118,8 @@ class _LoginPageState extends State<LoginPage> {
                                 child: Icon(eyeToggle
                                     ? Icons.visibility_off
                                     : Icons.visibility),
-                              )),
+                              )
+                              ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "Please enter your password";
@@ -160,8 +161,6 @@ class _LoginPageState extends State<LoginPage> {
                                                     AdminDashboard(),
                                               ),
                                             );
-                                            print(signUser.email);
-                                            // Navigate to the next screen or perform any desired action
                                           },
                                           child: const Text('OK'),
                                         ),
@@ -184,9 +183,7 @@ class _LoginPageState extends State<LoginPage> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        UserHome()));
-                                            print(signUser.email);
-                                          },
+                                                        UserHome()));                                          },
                                           child: const Text('OK'),
                                         ),
                                       ],
