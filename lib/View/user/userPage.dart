@@ -42,6 +42,7 @@ class _UserHomeState extends State<UserHome> {
         ],
       ),
       bottomNavigationBar: ConvexAppBar(
+        backgroundColor: Colors.blue.shade700,
         items: [
           TabItem(icon: Icons.home, title: 'Home'),
           TabItem(icon: Icons.pending, title: 'Progress'),
@@ -103,7 +104,12 @@ class _HomePageState extends State<HomePage> {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: Text('My App'),
+            title: Text(
+              'BiTra',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            centerTitle: true,
+            backgroundColor: Colors.blue.shade800,
             actions: [
               IconButton(
                 onPressed: () {

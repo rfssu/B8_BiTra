@@ -61,7 +61,12 @@ class _ProgresPesananState extends State<ProgresPesanan> {
   },
     child : Scaffold(
       appBar: AppBar(
-        title: Text('My App'),
+         title: Text(
+              'BiTra',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            centerTitle: true,
+            backgroundColor: Colors.blue.shade800,
       ),
       body: SafeArea(
         child: Column(
