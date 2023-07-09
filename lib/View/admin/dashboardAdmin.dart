@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,10 +13,11 @@ import '../../controller/aut_controller.dart';
 import '../../controller/pesanan_controller.dart';
 import '../loginScreen.dart';
 
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter/material.dart';
+
+import '../user/updatePesanan.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -46,18 +48,51 @@ class _AdminDashboardState extends State<AdminDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+
+    return WillPopScope( onWillPop: () async {
+          bool? exitConfirmed = await showDialog<bool>(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Konfirmasi'),
+                content: Text('Apakah Anda yakin ingin keluar?'),
+                actions: <Widget>[
+                  TextButton(
+                    child: Text('Batal'),
+                    onPressed: () {
+                      Navigator.of(context).pop(false);
+                    },
+                  ),
+                  TextButton(
+                    child: Text('Keluar'),
+                    onPressed: () {
+                      Navigator.of(context).pop(true);
+                      exit(0);
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+          return exitConfirmed ?? false;
+        },
+    child : Scaffold(
       appBar: AppBar(
-        title: Text('Admin Dashboard'),
+        title: Text(
+          'Dashboard Admin BiTra',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.blue.shade800,
         actions: [
           IconButton(
             onPressed: () {
               FirebaseAuth.instance.signOut();
               Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
-                  (route) => false,
-                );
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+                (route) => false,
+              );
             },
             icon: Icon(Icons.logout_rounded),
           )
@@ -104,18 +139,82 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: InkWell(
+                          onTap: () async {
+                            BuildContext sheetContext = context;
+                            DocumentSnapshot pesananSnapshot = await cc
+                                .getPesananById(data[index]['id'].toString());
+                            showModalBottomSheet(
+                              context: sheetContext,
+                              builder: (BuildContext context) {
+                                return Container(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'Detail Pesanan',
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      const SizedBox(height: 16.0),
+                                      Text(
+                                        'Nama: ${pesananSnapshot['nama']}',
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
+                                      Text(
+                                        'Alamat: ${pesananSnapshot['alamat']}',
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
+                                      Text(
+                                        'No HP: ${pesananSnapshot['noHp']}',
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
+                                      Text(
+                                        'Nama Barang: ${pesananSnapshot['namaBarang']}',
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
+                                      Text(
+                                        'Jumlah Barang: ${pesananSnapshot['jumlahBarang']}',
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
+                                      Text(
+                                        'Tanggal Pengambilan: ${pesananSnapshot['tanggal']}',
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
+                                      Text(
+                                        'Status: ${pesananSnapshot['status']}',
+                                        style: const TextStyle(fontSize: 16),
+                                      ),
+                                      const SizedBox(height: 16.0),
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: TextButton(
+                                          onPressed: () {
+                                            Navigator.of(sheetContext).pop();
+                                          },
+                                          child: const Text('Tutup'),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          },
                           child: Card(
                             elevation: 10,
                             child: ListTile(
                               leading: CircleAvatar(
-                                    backgroundColor: Colors.blue,
-                                    child: Icon(
-                                      _getIconByNamaBarang(
-                                          data[index]['namaBarang']),
-                                      color: Colors.white,
-                                      size: 24,
-                                    ),
-                                  ),
+                                backgroundColor: Colors.blue,
+                                child: Icon(
+                                  _getIconByNamaBarang(
+                                      data[index]['namaBarang']),
+                                  color: Colors.white,
+                                  size: 24,
+                                ),
+                              ),
                               title: Text(data[index]['nama']),
                               subtitle: Text(data[index]['tanggal']),
                               trailing: Row(
@@ -215,8 +314,10 @@ class _AdminDashboardState extends State<AdminDashboard> {
           ],
         ),
       ),
+    )
     );
   }
+
   IconData _getIconByNamaBarang(String namaBarang) {
     switch (namaBarang.toLowerCase()) {
       case 'meja':
