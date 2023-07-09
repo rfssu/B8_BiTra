@@ -17,6 +17,8 @@ class _RegisterPageState extends State<RegisterPage> {
   String? email;
   String? password;
 
+  bool eyeToggle = true;
+
   String role = 'user';
   @override
   Widget build(BuildContext context) {
@@ -38,144 +40,152 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Padding(
               padding: EdgeInsets.all(16),
               child: Form(
-              key: formkey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Registration',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      prefixIcon: Icon(Icons.person),
-                      labelText: 'Name',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                key: formkey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Registration',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    onChanged: (value) => userName = value,
-                  ),
-                  SizedBox(height: 16),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      prefixIcon: Icon(Icons.email),
-                      labelText: 'Email',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                    SizedBox(height: 16),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        prefixIcon: Icon(Icons.person),
+                        labelText: 'Name',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
+                      onChanged: (value) => userName = value,
                     ),
-                    onChanged: (value) => email = value,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
-                      }
-                      if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                          .hasMatch(value)) {
-                        return 'Please enter a valid email address';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(height: 16),
-                  TextFormField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-                      prefixIcon: Icon(Icons.lock),
-                      labelText: 'Password',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                    SizedBox(height: 16),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        prefixIcon: Icon(Icons.email),
+                        labelText: 'Email',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
+                      onChanged: (value) => email = value,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your email';
+                        }
+                        if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                            .hasMatch(value)) {
+                          return 'Please enter a valid email address';
+                        }
+                        return null;
+                      },
                     ),
-                    onChanged: (value) => password = value,
-                  ),
-                  SizedBox(height: 16),
-                  ElevatedButton(
-                  child: const Text('Register'),
-                  onPressed: () async {
-                    if (formkey.currentState!.validate()) {
-                      UserModel? registeredUser =
-                          await authCtr.registerWithEmailAndPassword(
-                        userName!,
-                        email!,
-                        password!,
-                        role,
-                        
-                      );
-                      if (registeredUser != null) {
-                        // Registration successful
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text('Registration Successful'),
-                              content: const Text(
-                                  'You have been successfully registered.'),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return LoginPage();
-                                    }));
-                                    print(registeredUser.userName);
-                                    // Navigate to the next screen or perform any desired action
-                                  },
-                                  child: const Text('OK'),
-                                ),
-                              ],
+                    SizedBox(height: 16),
+                    TextFormField(
+                      obscureText: eyeToggle,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Colors.white,
+                        prefixIcon: Icon(Icons.lock),
+                        labelText: 'Password',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        suffix: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    eyeToggle = !eyeToggle;
+                                  });
+                                },
+                                child: Icon(eyeToggle
+                                    ? Icons.visibility_off
+                                    : Icons.visibility),
+                              )
+                      ),
+                      onChanged: (value) => password = value,
+                    ),
+                    SizedBox(height: 16),
+                    ElevatedButton(
+                      child: const Text('Register'),
+                      onPressed: () async {
+                        if (formkey.currentState!.validate()) {
+                          UserModel? registeredUser =
+                              await authCtr.registerWithEmailAndPassword(
+                            userName!,
+                            email!,
+                            password!,
+                            role,
+                          );
+                          if (registeredUser != null) {
+                            // Registration successful
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Registration Successful'),
+                                  content: const Text(
+                                      'You have been successfully registered.'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return LoginPage();
+                                        }));
+                                        print(registeredUser.userName);
+                                        // Navigate to the next screen or perform any desired action
+                                      },
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                );
+                              },
                             );
-                          },
-                        );
-                      } else {
-                        // Registration failed
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text('Registration Failed'),
-                              content: const Text(
-                                  'An error occurred during registration.'),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text('OK'),
-                                ),
-                              ],
+                          } else {
+                            // Registration failed
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Registration Failed'),
+                                  content: const Text(
+                                      'An error occurred during registration.'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                );
+                              },
                             );
-                          },
-                        );
-                      }
-                    }
-                  },
+                          }
+                        }
+                      },
+                    ),
+                    SizedBox(height: 16),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()));
+                      },
+                      child: Text('Already have an account? Log in'),
+                    ),
+                  ],
                 ),
-                  
-                  SizedBox(height: 16),
-                  TextButton(
-                    onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                LoginPage()));
-                                  },
-                    child: Text('Already have an account? Log in'),
-                  ),
-                ],
               ),
-            ),
             ),
           ),
         ),
