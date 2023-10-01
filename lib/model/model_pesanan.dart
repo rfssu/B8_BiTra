@@ -40,7 +40,7 @@ class PesananModel {
 
   factory PesananModel.fromMap(Map<String, dynamic> map) {
     return PesananModel(
-      id: map['id'] != null ? map['id'] as String : null,
+      id: map['id'],
       nama: map['nama'] as String,
       alamat: map['alamat'] as String,
       noHp: map['noHp'] as String,
