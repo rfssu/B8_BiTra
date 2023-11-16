@@ -36,27 +36,27 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
         child: Center(
           child: Card(
-            margin: EdgeInsets.all(16),
+            margin: const EdgeInsets.all(16),
             child: Padding(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Form(
                 key: formkey,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
+                    const Text(
                       'Registration',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     TextFormField(
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
-                        prefixIcon: Icon(Icons.person),
+                        prefixIcon: const Icon(Icons.person),
                         labelText: 'Name',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -64,12 +64,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       onChanged: (value) => userName = value,
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     TextFormField(
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
-                        prefixIcon: Icon(Icons.email),
+                        prefixIcon: const Icon(Icons.email),
                         labelText: 'Email',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -87,13 +87,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     TextFormField(
                       obscureText: eyeToggle,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Colors.white,
-                        prefixIcon: Icon(Icons.lock),
+                        prefixIcon: const Icon(Icons.lock),
                         labelText: 'Password',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -111,7 +111,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       onChanged: (value) => password = value,
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     ElevatedButton(
                       child: const Text('Register'),
                       onPressed: () async {
@@ -138,7 +138,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         Navigator.push(context,
                                             MaterialPageRoute(
                                                 builder: (context) {
-                                          return LoginPage();
+                                          return const LoginPage();
                                         }));
                                         print(registeredUser.userName);
                                         // Navigate to the next screen or perform any desired action
@@ -173,15 +173,15 @@ class _RegisterPageState extends State<RegisterPage> {
                         }
                       },
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     TextButton(
                       onPressed: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LoginPage()));
+                                builder: (context) => const LoginPage()));
                       },
-                      child: Text('Already have an account? Log in'),
+                      child: const Text('Already have an account? Log in'),
                     ),
                   ],
                 ),

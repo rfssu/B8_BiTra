@@ -1,23 +1,15 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:project_bitra/View/user/progers_pesanan.dart';
-import 'package:project_bitra/model/model_pesanan.dart';
 
 import '../../controller/aut_controller.dart';
 import '../../controller/pesanan_controller.dart';
 import '../loginScreen.dart';
 
-import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
 
-import '../user/updatePesanan.dart';
 
 class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
@@ -54,17 +46,17 @@ class _AdminDashboardState extends State<AdminDashboard> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: Text('Konfirmasi'),
-                content: Text('Apakah Anda yakin ingin keluar?'),
+                title: const Text('Konfirmasi'),
+                content: const Text('Apakah Anda yakin ingin keluar?'),
                 actions: <Widget>[
                   TextButton(
-                    child: Text('Batal'),
+                    child: const Text('Batal'),
                     onPressed: () {
                       Navigator.of(context).pop(false);
                     },
                   ),
                   TextButton(
-                    child: Text('Keluar'),
+                    child: const Text('Keluar'),
                     onPressed: () {
                       Navigator.of(context).pop(true);
                       exit(0);
@@ -78,7 +70,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
         },
     child : Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Dashboard Admin BiTra',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
@@ -90,11 +82,11 @@ class _AdminDashboardState extends State<AdminDashboard> {
               FirebaseAuth.instance.signOut();
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
+                MaterialPageRoute(builder: (context) => const LoginPage()),
                 (route) => false,
               );
             },
-            icon: Icon(Icons.logout_rounded),
+            icon: const Icon(Icons.logout_rounded),
           )
         ],
       ),
@@ -103,11 +95,11 @@ class _AdminDashboardState extends State<AdminDashboard> {
           key: formkey,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Pesanan KU',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: StreamBuilder<List<DocumentSnapshot>>(
                 stream: cc.stream,
@@ -221,24 +213,24 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   IconButton(
-                                    icon: Icon(Icons.delete),
+                                    icon: const Icon(Icons.delete),
                                     onPressed: () {
                                       showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
                                           return AlertDialog(
-                                            title: Text('Konfirmasi'),
-                                            content: Text(
+                                            title: const Text('Konfirmasi'),
+                                            content: const Text(
                                                 'Apakah Anda yakin ingin menghapus item ini?'),
                                             actions: <Widget>[
                                               TextButton(
-                                                child: Text('Batal'),
+                                                child: const Text('Batal'),
                                                 onPressed: () {
                                                   Navigator.of(context).pop();
                                                 },
                                               ),
                                               TextButton(
-                                                child: Text('Hapus'),
+                                                child: const Text('Hapus'),
                                                 onPressed: () {
                                                   // Lakukan tindakan hapus disini
                                                   cc
@@ -254,7 +246,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                                       .pop(); // Tutup dialog setelah menghapus
                                                   ScaffoldMessenger.of(context)
                                                       .showSnackBar(
-                                                    SnackBar(
+                                                    const SnackBar(
                                                       content: Text(
                                                           'Pesanan dihapus'),
                                                     ),
@@ -282,7 +274,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  AdminDashboard()), // Ganti HalamanTujuan dengan halaman yang ingin Anda reload
+                                                  const AdminDashboard()), // Ganti HalamanTujuan dengan halaman yang ingin Anda reload
                                         );
                                       } else if (status == 'diterima') {
                                         await cc.pesananSelesai(
@@ -295,7 +287,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  AdminDashboard()), // Ganti HalamanTujuan dengan halaman yang ingin Anda reload
+                                                  const AdminDashboard()), // Ganti HalamanTujuan dengan halaman yang ingin Anda reload
                                         );
                                       }
                                     },

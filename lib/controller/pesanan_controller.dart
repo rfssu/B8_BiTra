@@ -61,7 +61,7 @@ class PesananController {
       return snapshot;
     } catch (e) {
       print('Error getting pesanan by ID: $e');
-      throw e;
+      rethrow;
     }
   }
 

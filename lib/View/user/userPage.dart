@@ -43,7 +43,7 @@ class _UserHomeState extends State<UserHome> {
       ),
       bottomNavigationBar: ConvexAppBar(
         backgroundColor: Colors.blue.shade700,
-        items: [
+        items: const [
           TabItem(icon: Icons.home, title: 'Home'),
           TabItem(icon: Icons.pending, title: 'Progress'),
         ],
@@ -80,17 +80,17 @@ class _HomePageState extends State<HomePage> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: Text('Konfirmasi'),
-                content: Text('Apakah Anda yakin ingin keluar?'),
+                title: const Text('Konfirmasi'),
+                content: const Text('Apakah Anda yakin ingin keluar?'),
                 actions: <Widget>[
                   TextButton(
-                    child: Text('Batal'),
+                    child: const Text('Batal'),
                     onPressed: () {
                       Navigator.of(context).pop(false);
                     },
                   ),
                   TextButton(
-                    child: Text('Keluar'),
+                    child: const Text('Keluar'),
                     onPressed: () {
                       Navigator.of(context).pop(true);
                       exit(0);
@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: Text(
+            title: const Text(
               'BiTra',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
@@ -116,11 +116,11 @@ class _HomePageState extends State<HomePage> {
                   FirebaseAuth.instance.signOut();
                   Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
                     (route) => false,
                   );
                 },
-                icon: Icon(Icons.logout_rounded),
+                icon: const Icon(Icons.logout_rounded),
               ),
             ],
           ),
@@ -128,11 +128,11 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Pesanan KU',
                   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Expanded(
                   child: StreamBuilder<List<DocumentSnapshot>>(
                     stream: cc.stream,
@@ -307,24 +307,24 @@ class _HomePageState extends State<HomePage> {
                                     subtitle: Text(data[index]['tanggal']),
                                     hoverColor: Colors.green,
                                     trailing: IconButton(
-                                      icon: Icon(Icons.delete),
+                                      icon: const Icon(Icons.delete),
                                       onPressed: () {
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
                                             return AlertDialog(
-                                              title: Text('Konfirmasi'),
-                                              content: Text(
+                                              title: const Text('Konfirmasi'),
+                                              content: const Text(
                                                   'Apakah Anda yakin ingin menghapus item ini?'),
                                               actions: <Widget>[
                                                 TextButton(
-                                                  child: Text('Batal'),
+                                                  child: const Text('Batal'),
                                                   onPressed: () {
                                                     Navigator.of(context).pop();
                                                   },
                                                 ),
                                                 TextButton(
-                                                  child: Text('Hapus'),
+                                                  child: const Text('Hapus'),
                                                   onPressed: () {
                                                     // Lakukan tindakan hapus disini
                                                     cc
@@ -341,7 +341,7 @@ class _HomePageState extends State<HomePage> {
                                                     ScaffoldMessenger.of(
                                                             context)
                                                         .showSnackBar(
-                                                      SnackBar(
+                                                      const SnackBar(
                                                         content: Text(
                                                             'Pesanan dihapus'),
                                                       ),
@@ -358,8 +358,9 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             );
-                          } else
+                          } else {
                             return Container();
+                          }
                         },
                       );
                     },
@@ -384,7 +385,7 @@ class _HomePageState extends State<HomePage> {
                           },
                           child: const Icon(Icons.add),
                         ),
-                        SizedBox(height: 16.0),
+                        const SizedBox(height: 16.0),
                         FloatingActionButton(
                           heroTag: "btn2",
                           onPressed: () {

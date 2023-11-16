@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:project_bitra/View/admin/dashboardAdmin.dart';
@@ -46,29 +45,29 @@ class _LoginPageState extends State<LoginPage> {
                           fontWeight: FontWeight.bold),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Container(
                     height: 407,
                     width: 370,
                     decoration: BoxDecoration(
-                      color: Color.fromARGB(255, 247, 245, 245),
+                      color: const Color.fromARGB(255, 247, 245, 245),
                       borderRadius: BorderRadius.circular(25),
                       boxShadow: [
                         BoxShadow(
-                          color: Color.fromARGB(255, 56, 56, 56).withOpacity(1),
+                          color: const Color.fromARGB(255, 56, 56, 56).withOpacity(1),
                           spreadRadius: 4,
                           blurRadius: 10,
-                          offset: Offset(2, 4),
+                          offset: const Offset(2, 4),
                         ),
                       ],
                     ),
                     child: Column(children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 50,
                       ),
-                      Container(
+                      SizedBox(
                         width: 350,
                         child: TextFormField(
                           keyboardType: TextInputType.emailAddress,
@@ -78,25 +77,26 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             labelText: 'Username/Email',
                             hintText: "Enter your username/email",
-                            prefixIcon: Icon(Icons.person),
+                            prefixIcon: const Icon(Icons.person),
                           ),
                           validator: (value) {
                             bool valid = RegExp(
                                     r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                 .hasMatch(value!);
-                            if (value == null || value.isEmpty) {
+                            if (value.isEmpty) {
                               return "Please enter username or email";
                             }
+                            return null;
                           },
                           onChanged: (value) {
                             email = value;
                           },
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 40,
                       ),
-                      Container(
+                      SizedBox(
                         width: 350,
                         height: 80,
                         child: TextFormField(
@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               labelText: "Password",
                               hintText: "Enter your password",
-                              prefixIcon: Icon(Icons.lock),
+                              prefixIcon: const Icon(Icons.lock),
                               suffix: InkWell(
                                 onTap: () {
                                   setState(() {
@@ -126,6 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                             } else if (value.length < 6) {
                               return "Please enter your password until 6 charachter or more";
                             }
+                            return null;
                           },
                           onChanged: (value) {
                             password = value;
@@ -133,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         child: InkWell(
                           onTap: () async {
                             if (formkey.currentState!.validate()) {
@@ -158,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    AdminDashboard(),
+                                                    const AdminDashboard(),
                                               ),
                                             );
                                           },
@@ -183,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        UserHome()));                                          },
+                                                        const UserHome()));                                          },
                                           child: const Text('OK'),
                                         ),
                                       ],
@@ -206,7 +207,7 @@ class _LoginPageState extends State<LoginPage> {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        LoginPage()));
+                                                        const LoginPage()));
                                           },
                                           child: const Text('OK'),
                                         ),
@@ -221,9 +222,9 @@ class _LoginPageState extends State<LoginPage> {
                             width: 300,
                             height: 50,
                             decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 19, 6, 100),
+                                color: const Color.fromARGB(255, 19, 6, 100),
                                 borderRadius: BorderRadius.circular(50)),
-                            child: Center(
+                            child: const Center(
                               child: Text(
                                 'Sign In',
                                 style: TextStyle(
@@ -236,12 +237,12 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(2),
+                        padding: const EdgeInsets.all(2),
                         child: Container(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
+                              const Text(
                                 "Don't have an account? ",
                                 style: TextStyle(color: Color.fromARGB(255, 129, 191, 250)),
                               ),
@@ -251,9 +252,9 @@ class _LoginPageState extends State<LoginPage> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                RegisterPage()));
+                                                const RegisterPage()));
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     "Sign Up",
                                     style: TextStyle(color: Color.fromARGB(255, 0, 34, 114)),
                                   ))

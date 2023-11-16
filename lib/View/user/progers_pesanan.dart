@@ -3,12 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
-import '../../controller/aut_controller.dart';
 import '../../controller/pesanan_controller.dart';
-import '../loginScreen.dart';
 
 class ProgresPesanan extends StatefulWidget {
   const ProgresPesanan({super.key});
@@ -37,17 +33,17 @@ class _ProgresPesananState extends State<ProgresPesanan> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Konfirmasi'),
-          content: Text('Apakah Anda yakin ingin keluar?'),
+          title: const Text('Konfirmasi'),
+          content: const Text('Apakah Anda yakin ingin keluar?'),
           actions: <Widget>[
             TextButton(
-              child: Text('Batal'),
+              child: const Text('Batal'),
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
             ),
             TextButton(
-              child: Text('Keluar'),
+              child: const Text('Keluar'),
               onPressed: () {
                 Navigator.of(context).pop(true);
                 exit(0);
@@ -61,7 +57,7 @@ class _ProgresPesananState extends State<ProgresPesanan> {
   },
     child : Scaffold(
       appBar: AppBar(
-         title: Text(
+         title: const Text(
               'BiTra',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
@@ -72,11 +68,11 @@ class _ProgresPesananState extends State<ProgresPesanan> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Pesanan KU',
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: StreamBuilder<List<DocumentSnapshot>>(
                 stream: cc.stream,
@@ -128,7 +124,7 @@ class _ProgresPesananState extends State<ProgresPesanan> {
                                     color: status == 'diterima'
                                         ? Colors.green
                                         : status == 'pending'
-                                            ? Color.fromARGB(255, 175, 13, 2)
+                                            ? const Color.fromARGB(255, 175, 13, 2)
                                             : Colors.blue,
                                   ),
                                 ),
@@ -136,8 +132,9 @@ class _ProgresPesananState extends State<ProgresPesanan> {
                             ),
                           ),
                         );
-                        }else
-                        return Container();
+                        }else {
+                          return Container();
+                        }
                       } else {
                         // Return an empty container if the status is neither "selesai" nor "diterima"
                         return Container();

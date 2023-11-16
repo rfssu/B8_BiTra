@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:project_bitra/View/user/userPage.dart';
 import 'package:project_bitra/model/model_pesanan.dart';
 
@@ -70,14 +67,14 @@ class _UpdatePesananState extends State<UpdatePesanan> {
                             ),
                     hintText: 'Nama',
                     labelText: 'Nama',
-                    prefixIcon: Icon(Icons.person),
+                    prefixIcon: const Icon(Icons.person),
                   ),
                   onSaved: (value) {
                     nama = value;
                   },
                   initialValue: widget.beforenama,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   
                   decoration: InputDecoration(
@@ -86,28 +83,28 @@ class _UpdatePesananState extends State<UpdatePesanan> {
                     hintText: 'Nomor HP',
                     labelText: 'Nomor HP',
                   
-                    prefixIcon: Icon(Icons.phone),
+                    prefixIcon: const Icon(Icons.phone),
                   ),
                   onSaved: (value) {
                     noHp = value;
                   },
                   initialValue: widget.beforenoHp,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder( borderRadius: BorderRadius.circular(10),
                             ),
                     hintText: 'Alamat',
                     labelText: 'Alamat Pengambilan',
-                    prefixIcon: Icon(Icons.location_on),
+                    prefixIcon: const Icon(Icons.location_on),
                   ),
                   onSaved: (value) {
                     alamat = value;
                   },
                   initialValue: widget.beforealamat,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 DropdownButtonFormField<String>(
                   value: selectedOption ?? widget.beforeanamaBarang,
                   onChanged: (String? newValue) {
@@ -127,20 +124,20 @@ class _UpdatePesananState extends State<UpdatePesanan> {
                             ),
                     hintText: 'Nama Barang',
                     labelText: 'Nama Barang',
-                    prefixIcon: Icon(Icons.shopping_cart),
+                    prefixIcon: const Icon(Icons.shopping_cart),
                   ),
                   onSaved: (value) {
                     namaBarang = value;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder( borderRadius: BorderRadius.circular(10),
                             ),
                     hintText: 'Jumlah Barang',
                     labelText: 'Jumlah Barang',
-                    prefixIcon: Icon(Icons.format_list_numbered),
+                    prefixIcon: const Icon(Icons.format_list_numbered),
                   ),
                   onSaved: (value) {
                     if (value != null && value.isNotEmpty) {
@@ -151,14 +148,14 @@ class _UpdatePesananState extends State<UpdatePesanan> {
                       ? widget.beforejumlahBarang.toString()
                       : '',
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder( borderRadius: BorderRadius.circular(10),
                             ),
                     hintText: 'Tanggal',
                     labelText: 'Tanggal Pengambilan',
-                    prefixIcon: Icon(Icons.date_range),
+                    prefixIcon: const Icon(Icons.date_range),
                   ),
                   readOnly: true,
                   controller: TextEditingController(
@@ -183,7 +180,7 @@ class _UpdatePesananState extends State<UpdatePesanan> {
                     tanggal = value;
                   },
                 ),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -218,7 +215,7 @@ class _UpdatePesananState extends State<UpdatePesanan> {
                         }
                       },
                     ),
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                     ElevatedButton(
                       child: const Text('Cancel Update'),
                       onPressed: () {

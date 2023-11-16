@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_bitra/View/user/progers_pesanan.dart';
 import 'package:project_bitra/View/user/userPage.dart';
 import 'package:project_bitra/controller/pesanan_controller.dart';
 import 'package:project_bitra/model/model_pesanan.dart';
@@ -41,14 +39,14 @@ class _FormPemesananState extends State<FormPemesanan> {
             key: formKey,
             child: Column(
               children: [
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFormField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder( borderRadius: BorderRadius.circular(10),
                             ),
                     hintText: 'Masukan Nama',
                     labelText: ' Nama',
-                    prefixIcon: Icon(Icons.person),
+                    prefixIcon: const Icon(Icons.person),
                   ),
                   onChanged: (value) {
                     setState(() {
@@ -62,14 +60,14 @@ class _FormPemesananState extends State<FormPemesanan> {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder( borderRadius: BorderRadius.circular(10),
                             ),
                     hintText: 'Masukan Alamat',
                     labelText: 'Alamat',
-                    prefixIcon: Icon(Icons.location_on),
+                    prefixIcon: const Icon(Icons.location_on),
                   ),
                   onChanged: (value) {
                     setState(() {
@@ -83,14 +81,14 @@ class _FormPemesananState extends State<FormPemesanan> {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder( borderRadius: BorderRadius.circular(10),
                             ),
                     hintText: 'Masukan Nomor HP',
                     labelText: 'Nomor HP',
-                    prefixIcon: Icon(Icons.phone),
+                    prefixIcon: const Icon(Icons.phone),
                   ),
                   onChanged: (value) {
                     setState(() {
@@ -104,16 +102,16 @@ class _FormPemesananState extends State<FormPemesanan> {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text('Pilih Jenis Barang'),
+                          title: const Text('Pilih Jenis Barang'),
                           content: DropdownButtonFormField<String>(
-                            hint: Text('data'),
+                            hint: const Text('data'),
                             value: selectedOption,
                             onChanged: (String? newValue) {
                               setState(() {
@@ -143,7 +141,7 @@ class _FormPemesananState extends State<FormPemesanan> {
                         hintText: 'Masukan Nama Barang',
                         labelText: 'Nama Barang',
                         
-                        prefixIcon: Icon(Icons.shopping_cart),
+                        prefixIcon: const Icon(Icons.shopping_cart),
                       ),
                       controller: TextEditingController(text: selectedOption),
                       validator: (value) {
@@ -155,14 +153,14 @@ class _FormPemesananState extends State<FormPemesanan> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder( borderRadius: BorderRadius.circular(10),
                             ),
                     hintText: 'Total Jumlah Barang',
                     labelText: 'Jumlah Barang',
-                    prefixIcon: Icon(Icons.format_list_numbered),
+                    prefixIcon: const Icon(Icons.format_list_numbered),
                   ),
                   onChanged: (value) {
                     setState(() {
@@ -176,7 +174,7 @@ class _FormPemesananState extends State<FormPemesanan> {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
                     showDatePicker(
@@ -200,7 +198,7 @@ class _FormPemesananState extends State<FormPemesanan> {
                             ),
                         hintText: 'Tanggal Pengambilan Barang',
                         labelText: 'Tanggal Barang Di ambil',
-                        prefixIcon: Icon(Icons.calendar_today),
+                        prefixIcon: const Icon(Icons.calendar_today),
                       ),
                       controller: TextEditingController(text: tanggal),
                       validator: (value) {
@@ -212,7 +210,7 @@ class _FormPemesananState extends State<FormPemesanan> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 Row(
@@ -241,7 +239,7 @@ class _FormPemesananState extends State<FormPemesanan> {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => UserHome(),
+                                        builder: (context) => const UserHome(),
                                       ),
                                     );
                                   },
@@ -252,7 +250,7 @@ class _FormPemesananState extends State<FormPemesanan> {
                         );
                       },
                     ),
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                     ElevatedButton(
                       child: const Text('Add Pesanan'),
                       onPressed: () {
@@ -276,7 +274,7 @@ class _FormPemesananState extends State<FormPemesanan> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    UserHome()), // Ganti HalamanTujuan dengan halaman yang ingin Anda reload
+                                    const UserHome()), // Ganti HalamanTujuan dengan halaman yang ingin Anda reload
                           );
                         }
                       },
