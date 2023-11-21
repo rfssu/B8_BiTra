@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:project_bitra/View/registerpage.dart';
-import 'package:test/integration_test/registertest.dart';
+import 'package:integration_test/registertest.dart';
 import 'package:project_bitra/main.dart' as app;
 
 void main() {
