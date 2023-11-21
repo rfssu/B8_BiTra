@@ -18,8 +18,6 @@ void main() {
         await Future.delayed(const Duration(seconds: 2));
         await tester.enterText(find.byType(TextFormField).at(0), 'Airel Javier Aldaffae');
         await Future.delayed(const Duration(seconds: 2));
-        await tester.enterText(find.byType(TextFormField).at(1), 'sleman');
-        await Future.delayed(const Duration(seconds: 2));
         await tester.enterText(find.byType(TextFormField).at(2), 'email@gmail.com');
         await Future.delayed(const Duration(seconds: 2));
         await tester.enterText(find.byType(TextFormField).at(3), '12345678');
